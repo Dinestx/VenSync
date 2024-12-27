@@ -1,7 +1,7 @@
 import twilio from 'twilio'
 
-const accountSid = "AC34fa22b3396980dc7d9ff53cf1cf67c6";
-const authToken = "351c9a6561cf4894c668c6549440641b";
+const accountSid =process.env.ACCOUNT_SID;
+const authToken = process.env.AUTH_TOKEN;
 const client = twilio(accountSid, authToken);
 
 // Generate a random 6-digit OTP
