@@ -1,0 +1,49 @@
+// models/Vendor.js
+import mongoose from "mongoose";
+
+const vendorSchema = new mongoose.Schema({
+  baseId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Base',
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    unique: true,
+  },
+  skills: {
+    type: String,
+    required: true,
+  },
+  address: {
+    type: String,
+  },
+  experience: {
+    type: String,
+  },
+  applied_at: {
+    type: Date,
+    default: Date.now,
+  },
+  approved: {
+    type: Boolean,
+    default: false,
+  },
+  assigned_work: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Complaint',
+    },
+  ],
+  earnings: {
+    type: mongoose.Schema.Types.Decimal128,
+    default: 0.0,
+  },
+});
+
+const Vendor= mongoose.model('Vendor', vendorSchema);
+export default Vendor
