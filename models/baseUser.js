@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 
 const baseSchema = new mongoose.Schema({
  
-  phone: {
+  email: {
     type: String,
     required: true,
     unique: true,
