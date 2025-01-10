@@ -1,7 +1,7 @@
 import Base from "../models/baseUser.js";
 import User from "../models/user.js";
 import Vendor from "../models/vendor.js";
-import { newOtp,validateOtp,sendOtp } from "../utils/otpUtils.js";
+import { newOtp,validateOtp,sendOtp } from "../utils/otpEmail.js";
 import jwt from 'jsonwebtoken';
 
 
