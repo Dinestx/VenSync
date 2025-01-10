@@ -16,10 +16,10 @@ const createSessionToken = (baseId) => {
 
 // Generate OTP function
 export const generateOtp = async(req,res)=>{
-    const { phone } = req.body;
+    const { email } = req.body;
 
-  if (!phone) {
-    return res.status(400).json({ message: 'Phone number is required' });
+  if (!email) {
+    return res.status(400).json({ message: 'email number is required' });
   }
 
   try {
@@ -27,16 +27,16 @@ export const generateOtp = async(req,res)=>{
     const otpExpiry = new Date(Date.now() + 5 * 60 * 1000); // OTP valid for 5 minutes
 
     // Check if user exists
-    let user = await Base.findOne({ phone });
+    let user = await Base.findOne({ email });
     if (!user) {
-      user = new Base({ phone, otp, otpExpiry });
+      user = new Base({ email, otp, otpExpiry });
     } else {
       user.otp = otp;
       user.otpExpiry = otpExpiry;
     }
 
     await user.save();
-    await sendOtp(phone, otp); // Twilio to send OTP
+    await sendOtp(email, otp); // Twilio to send OTP
 
     res.status(200).json({ message: 'OTP sent successfully' });
   } catch (err) {
@@ -48,11 +48,11 @@ export const generateOtp = async(req,res)=>{
 // verify OTP function
 export const verifyOtp = async (req, res) => {
 
-  const { phone, otp } = req.body;
+  const { email, otp } = req.body;
 
   try {
     // Check if the account exists
-    const base = await Base.findOne({ phone });
+    const base = await Base.findOne({ email });
     if (!base) return res.status(404).json({ message: 'Account not found' });
 
     // Validate OTP and expiration
