@@ -5,14 +5,14 @@ import Complaint from "../models/complaints.js";
 
 // Generate OTP function
 export const completeprofile = async(req,res)=>{
-    const { name, phone, address } = req.body;
+    const { name, email, address } = req.body;
     const { baseId } = req.user;
   
     try {
       const user = new User({
         baseId,
         name,
-        phone,
+        email,
         address,
       });
   

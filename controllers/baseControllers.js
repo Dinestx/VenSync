@@ -9,7 +9,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'yourSecretKey';
 
 // Generate JWT Token
 const createSessionToken = (baseId) => {
-  return jwt.sign({ baseId }, JWT_SECRET, { expiresIn: '30d' });
+  return jwt.sign({ baseId }, JWT_SECRET, { expiresIn: '7d' });
 };
 
 
