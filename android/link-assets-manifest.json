@@ -1,0 +1,13 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "Assets/fonts/MuseoModerno-ExtraBold.ttf",
+      "sha1": "2a0bdaa355e550f9643e4d70fa155597ca699013"
+    },
+    {
+      "path": "Assets/fonts/MuseoModerno-Regular.ttf",
+      "sha1": "3195c6967ad6dc3746cfc8532db3ccb90205af4f"
+    }
+  ]
+}
