@@ -77,7 +77,7 @@ export const verifyOtp = async (req, res) => {
       res.status(200).json({
         message: 'Login successful',
         token,
-        profileComplete: true, // Indicates profile is already completed
+        profileComplete: "true", // Indicates profile is already completed
         data: {
           user: user || null,
           vendor: vendor || null,
@@ -87,7 +87,7 @@ export const verifyOtp = async (req, res) => {
       res.status(200).json({
         message: 'OTP verified',
         token,
-        profileComplete: false, // Indicates a new user who needs to complete their profile
+        profileComplete: "false", // Indicates a new user who needs to complete their profile
       });
     }
   } catch (err) {
