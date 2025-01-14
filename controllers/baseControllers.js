@@ -73,25 +73,41 @@ export const verifyOtp = async (req, res) => {
     const token = createSessionToken(base._id);
 
     // Prepare response based on existence of user or vendor
-    if (user || vendor) {
-      res.status(200).json({
+    if (vendor) {
+      if (!vendor.approved) {
+        return res.status(403).json({
+          message: 'Your vendor application is awaiting approval. Please wait for admin approval.',
+        });
+      }
+
+      // If vendor is approved, return vendor data
+      return res.status(200).json({
         message: 'Login successful',
         token,
-        email:email,
-        profileComplete: true, // Indicates profile is already completed
-        data: {
-          user: user || null,
-          vendor: vendor || null,
-        },
-      });
-    } else {
-      res.status(200).json({
-        message: 'OTP verified',
-        token,
-        email:email,
-        profileComplete: false, // Indicates a new user who needs to complete their profile
+        email,
+        profileComplete: true,
+        data: { vendor },
       });
     }
+
+    // If user exists, return user data
+    if (user) {
+      return res.status(200).json({
+        message: 'Login successful',
+        token,
+        email,
+        profileComplete: true,
+        data: { user },
+      });
+    }
+
+    // For new profiles, return response to complete profile
+    res.status(200).json({
+      message: 'OTP verified',
+      token,
+      email,
+      profileComplete: false, // Indicates a new user who needs to complete their profile
+    });
   } catch (err) {
     console.error('Error verifying OTP:', err.message);
     res.status(500).json({ message: 'Error verifying OTP', error: err.message });

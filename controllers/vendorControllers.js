@@ -3,7 +3,6 @@ import Vendor from "../models/vendor.js";
 
 
 
-// Generate OTP function
 export const applyvendor= async(req,res)=>{
     const { name, email, skills, address, experience } = req.body;
   const { baseId } = req.user;
@@ -16,10 +15,18 @@ export const applyvendor= async(req,res)=>{
       skills,
       address,
       experience,
+      approved: false, 
     });
 
     await vendor.save();
-    res.status(201).json({ message: 'Applied as vendor successfully' });
+    await Base.findByIdAndUpdate(baseId, {
+      role: 'vendor',
+    });
+
+    res.status(201).json({
+      message: 'Applied as vendor successfully. Pending approval.',
+    
+    });
   } catch (err) {
     res.status(500).json({ message: 'Error applying as vendor', error: err.message });
   }
