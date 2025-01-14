@@ -17,7 +17,7 @@ export const protect = async (req, res, next) => {
     const decoded = jwt.verify(token, JWT_SECRET);
 
     // Attach user info to the request object
-    req.user = decoded;
+    req.user = { baseId: decoded.baseId };
     next();
   } catch (err) {
     console.error('JWT Verification Error:', err.message);

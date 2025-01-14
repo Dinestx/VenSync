@@ -28,7 +28,7 @@ export const completeprofile = async(req,res)=>{
 //createComplaint by user
 export const createComplaint = async (req, res) => {
     const { title, description, images } = req.body;
-    const userId = req.userId; // Extracted from session or token middleware
+    const userId = req.user; // Extracted from session or token middleware
   
     if (!title || !description) {
       return res.status(400).json({ message: 'Title and description are required' });
