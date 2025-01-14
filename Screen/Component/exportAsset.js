@@ -13,7 +13,8 @@ import Issue, {SubmitComplain} from '../Home/Issue.js';
 import MyIssue from '../Home/My_issue.js';
 import EmailAuth from '../Auth/Email_Auth.js';
 import Welcome from '../Auth/Welcome.js'
-import Developer from '../Profile/Developer.js'
+import Developer from '../Profile/Developer.js';
+import CompleteProfile from '../Profile/completeProfile.js'
 
 // Icon Import
 import HomeIcon from '../../Assets/Icon/home.svg'; 
@@ -68,6 +69,7 @@ export{
     EmailAuth,
     Welcome,
     Developer,
+    CompleteProfile,
 
     // Icon Export
     HomeIcon,

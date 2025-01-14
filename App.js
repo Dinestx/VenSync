@@ -18,6 +18,7 @@ import {
   MyIssue,
   Welcome,
   Developer,
+  CompleteProfile,
 } from './Screen/Component/exportAsset';
 import EmailAuth from './Screen/Auth/Email_Auth';
 
@@ -54,6 +55,7 @@ export default function App() {
           <Stack.Screen name="SubmitComplain" component={SubmitComplain} />
           <Stack.Screen name="Vendor" component={Vendor} />
           <Stack.Screen name="Profile" component={Profile} />
+          <Stack.Screen name="CompleteProfile" component={CompleteProfile} />
           <Stack.Screen name="Developer" component={Developer} />
         </Stack.Navigator>
       </NavigationContainer>

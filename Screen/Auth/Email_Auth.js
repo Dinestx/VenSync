@@ -1,14 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import { View, Text, StatusBar, SafeAreaView, TextInput, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native"; // Import useNavigation
-import { ScreenW, ScreenH, ArrowIcon, EditIcon } from "../Component/exportAsset";
+// import { useNavigation } from "@react-navigation/native"; // Import useNavigation
+import { ScreenW, ScreenH, ArrowIcon, EditIcon, CompleteProfile } from "../Component/exportAsset";
 import { useTheme } from "../Component/theme";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const EmailAuth = () => {
+const EmailAuth = ({ navigation }) => {
     const theme = useTheme();
-    const navigation = useNavigation(); // Initialize navigation
+    // const navigation = useNavigation(); // Initialize navigation
+
 
     // Email Validation State
     const [email, setEmail] = useState("");
@@ -35,7 +36,7 @@ const EmailAuth = () => {
 
             try {
                 // Make a POST request to the API with the email in the request body
-                const response = await axios.post("https://vensync-89u5.onrender.com/api/base/generate-otp", {
+                const response = await axios.post("https://vensync-se39.onrender.com/api/base/generate-otp", {
                     email: email, // Wrap email in an object
                 });
 
@@ -93,6 +94,7 @@ const EmailAuth = () => {
         }
     };
 
+
     const handleOtpSubmit = async () => {
         // const userData = { email };
         console.log(email);
@@ -100,18 +102,43 @@ const EmailAuth = () => {
 
 
         try {
-            const response = await axios.post("https://vensync-89u5.onrender.com/api/base/verify-otp", {
+            const response = await axios.post("https://vensync-se39.onrender.com/api/base/verify-otp", {
                 email: email, // Include email for verification
                 otp: otp.join(''), // Combine OTP array into a single string
             });
 
+            console.log("Response",response.data)
+
 
             if (response.status === 200) {
-                const token = response.data.token;
-                await AsyncStorage.setItem("token", token);
-                navigation.navigate('VenSync', { user: response.data.user });
-                console.log(user)
+                // const token = response.data.token;
+                // await AsyncStorage.setItem("token", token);
+                // const profile = response.data.profileComplete
+                // await AsyncStorage.setItem("profile",profile);
+                // console.log(profile)
+                try {
+                    const { token, profileComplete, email } = response.data;
+                    await AsyncStorage.multiSet([
+                        ['token', token],
+                        ['profile', JSON.stringify(profileComplete)],
+                        ['email', email],
+                    ]);
+                    console.log(token)
+                    if (profileComplete === false) {
+                        navigation.navigate('CompleteProfile');
+                    } else {
+                        navigation.navigate('VenSync', { user: response.data.user });
+                    }                    
+                } catch (error) {
+                    console.error('Error saving data to AsyncStorage:', error.message);
+                }
 
+
+                // if (profileCompleted === "false") {
+                //     navigation.navigate('Welcome');
+                // } else {
+                //     navigation.navigate('VenSync', { user: response.data.user });
+                // }
 
             } else {
                 console.error('OTP verification failed:', response.data.message);

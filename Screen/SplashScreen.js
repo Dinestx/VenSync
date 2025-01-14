@@ -13,21 +13,27 @@ const SplashScreen = ({ navigation }) => {
         if (isFirstTime === null) {
           // First-time user
           await AsyncStorage.setItem('isFirstTime', 'false');
-          setTimeout(()=>{
-            navigation.navigate('Onboarding')
-          },1200)
-          // navigation.navigate('Onboarding');
+          setTimeout(() => {
+            navigation.navigate('Onboarding'); // navigation.navigate('Onboarding');
+          }, 1200)
         } else if (token) {
-          const timer = setTimeout(() => {
-            navigation.navigate('VenSync');   // Returning user with token (logged in)
-          }, 1200); 
-          
-          // navigation.replace('VenSync');
+
+          try {
+            const profile = await AsyncStorage.getItem('profile')
+            if (profile == "false") {
+              navigation.navigate('Welcome');
+            } else {
+              navigation.navigate('VenSync');
+            }
+          } catch (error) {
+            console.log(error)
+          }
+
         } else {
           setTimeout(() => {
             navigation.replace('Onboarding');  // Returning user without token   EmailAuth
           }, 800);
-          
+
           // navigation.replace('EmailAuth');
         }
       } catch (error) {
@@ -41,7 +47,7 @@ const SplashScreen = ({ navigation }) => {
 
 
   return (
-    
+
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="transparent" translucent={true} />
       <Lottie
@@ -63,7 +69,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   animation: {
-    width: '100%',  
-    height: '100%', 
+    width: '100%',
+    height: '100%',
   },
 });

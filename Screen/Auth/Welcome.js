@@ -44,7 +44,7 @@ const Welcome = () => {
                         <Text style={{ fontSize: ScreenW * 0.033, color: theme.primaryText }}>Complete your Profile to start using the App.</Text>
                     </View>
 
-                    <TouchableOpacity style={{ backgroundColor: 'rgba(30, 96, 195, 1)', height: 45, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }} onPress={() => console.log('Button Pressed')}>
+                    <TouchableOpacity style={{ backgroundColor: 'rgba(30, 96, 195, 1)', height: 45, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }} onPress={() => navigation.navigate('CompleteProfile')}>
                         <Text style={{ color: '#FFF', fontSize: 16, fontWeight: 'bold' }}>Complete Profile</Text>
                     </TouchableOpacity>
                 </View>
