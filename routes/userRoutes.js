@@ -4,10 +4,10 @@ import { protect } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
 router.post('/complete-profile',protect,completeprofile)
-router.post('/createcomplaint',createComplaint)
-router.get('/getcomplaint',getuserComplaints)
-router.post('/updatecomplaintstatus',updateComplaintStatus)
-router.post('/updateuserprofile',updateUserProfile)
+router.post('/createcomplaint',protect,createComplaint)
+router.get('/getcomplaint',protect,getuserComplaints)
+router.post('/updatecomplaintstatus',protect,updateComplaintStatus)
+router.post('/updateuserprofile',protect,updateUserProfile)
 
 
 
