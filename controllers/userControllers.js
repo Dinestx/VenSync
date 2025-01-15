@@ -6,11 +6,11 @@ import Complaint from "../models/complaints.js";
 // Generate OTP function
 export const completeprofile = async(req,res)=>{
     const { name, phone, address } = req.body;
-    const { baseId } = req.user;
+    const  userId  = req.user;
   
     try {
       const user = new User({
-        baseId,
+        userId,
         name,
         phone,
         address,
@@ -55,7 +55,7 @@ export const createComplaint = async (req, res) => {
   // Get complaints (user-specific)
   export const getuserComplaints = async (req, res) => {
     const { role } = req.user; // role should be passed from middleware
-    const userId = req.userId;
+    const userId = req.user;
   
     try {
       let complaints;
