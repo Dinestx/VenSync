@@ -46,6 +46,12 @@ export const createComplaint = async (req, res) => {
       });
   
       await complaint.save();
+      await User.findByIdAndUpdate(
+        userId,
+        { $push: { complaints: complaint._id } },
+        { new: true }
+      );
+  
       res.status(201).json({ message: 'Complaint created successfully', complaint });
     } catch (err) {
       res.status(500).json({ message: 'Error creating complaint', error: err.message });
