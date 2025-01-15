@@ -10,7 +10,7 @@ export const completeprofile = async(req,res)=>{
   
     try {
       const user = new User({
-        userId,
+        baseId:userId,
         name,
         phone,
         address,
