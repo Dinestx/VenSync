@@ -5,7 +5,7 @@ import Vendor from "../models/vendor.js";
 
 export const applyvendor= async(req,res)=>{
     const { name, phone, aadhar, address } = req.body;
-  const  baseId  = req.baseId;
+     const  baseId  = req.baseId;
 
   try {
     const vendor = new Vendor({

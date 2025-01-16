@@ -8,7 +8,15 @@ export const completeprofile = async(req,res)=>{
     const { name, phone, address } = req.body;
     const  baseId  = req.baseId;
   
+    
     try {
+      const existingUser = await User.findOne({ phone });
+      if (existingUser) {
+        return res.status(400).json({
+          message: "Phone number already exists. Please use a different phone number.",
+        });
+      }
+
       const user = new User({
         baseId:baseId,
         name,
@@ -67,7 +75,7 @@ export const createComplaint = async (req, res) => {
     }
   
     try {
-      // Find user or vendor associated with the baseId
+      // Find user associated with the baseId
       const user = await User.findOne({ baseId }).populate("complaints");
       // const vendor = await Vendor.findOne({ baseId });
   
