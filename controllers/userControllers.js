@@ -123,13 +123,13 @@ export const createComplaint = async (req, res) => {
   //update user profile
   export const updateUserProfile = async (req, res) => {
     const userId = req.userId; // Extracted from session or token middleware
-    const { name, email, address } = req.body;
+    const { name, phone, address } = req.body;
   
     try {
       // Find and update user profile
       const user = await User.findByIdAndUpdate(
         userId,
-        { name, email, address },
+        { name, phone, address },
         { new: true } // Return updated document
       );
   

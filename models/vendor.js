@@ -11,20 +11,18 @@ const vendorSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  email: {
+  phone: {
     type: String,
     unique: true,
   },
-  skills: {
+  aadhar: {
     type: String,
     required: true,
   },
   address: {
     type: String,
   },
-  experience: {
-    type: String,
-  },
+
   applied_at: {
     type: Date,
     default: Date.now,
