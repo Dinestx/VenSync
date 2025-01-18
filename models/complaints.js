@@ -45,7 +45,7 @@ const complaintSchema = new mongoose.Schema({
   },
 });
 
-complaintSchema.pre("save", async function (next) {
+complaintSchema.pre("validate", function (next) {
   if (!this.complaint_id) {
   
     this.complaint_id = crypto.randomBytes(5).toString("hex").slice(0, 9).toUpperCase();
