@@ -20,10 +20,15 @@ const SplashScreen = ({ navigation }) => {
 
           try {
             const profile = await AsyncStorage.getItem('profile')
-            if (profile == "false") {
-              navigation.navigate('Welcome');
+            if (profile == false) {
+              setTimeout(()=>{
+                navigation.navigate('EmailAuth');
+              }, 1000)
+              
             } else {
-              navigation.navigate('VenSync');
+              setTimeout(()=>{
+                navigation.navigate('VenSync');
+              }, 1000)
             }
           } catch (error) {
             console.log(error)
@@ -44,6 +49,8 @@ const SplashScreen = ({ navigation }) => {
 
     checkNavigationFlow();
   }, [navigation]);
+   
+
 
 
   return (

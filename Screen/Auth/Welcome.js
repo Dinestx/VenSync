@@ -8,19 +8,6 @@ import Lottie from 'lottie-react-native';
 const Welcome = () => {
     const theme = useTheme();
     const navigation = useNavigation();
-
-    const IssueHandle = () => {
-        navigation.navigate('Issue')
-    };
-
-    const myIssue = () => {
-        navigation.navigate('MyIssue')
-    };
-    const Dashboard = () => {
-        navigation.navigate()
-    };
-
-
     return (
         <View style={{ width: ScreenW, height: ScreenH, zIndex: 1, position: 'relative', backgroundColor: theme.onBoard, flex: 1 }}>
             <StatusBar barStyle={theme.statusBarContent} backgroundColor="transparent" translucent={true} />
@@ -56,7 +43,7 @@ const Welcome = () => {
                         <Text style={{ fontSize: ScreenW * 0.033, color: theme.primaryText }}>Become a  Gastos member to get featured on Gastos Marketplace.</Text>
                     </View>
 
-                    <TouchableOpacity style={{ borderColor: 'rgba(30, 96, 195, 1)', borderWidth: 1, height: 45, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }} onPress={() => console.log('Button Pressed')}>
+                    <TouchableOpacity style={{ borderColor: 'rgba(30, 96, 195, 1)', borderWidth: 1, height: 45, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }} onPress={() =>navigation.navigate('ApplyVendor')}>
                         <Text style={{ color: 'rgba(30, 96, 195, 1)', fontSize: 16, fontWeight: 'bold' }}>Complete Profile</Text>
                     </TouchableOpacity>
                 </View>

@@ -123,23 +123,18 @@ const EmailAuth = ({ navigation }) => {
                         ['profile', JSON.stringify(profileComplete)],
                         ['email', email],
                     ]);
-                    console.log(token)
+                    console.log("ProfileComplete Status",AsyncStorage.getItem('profile'))
                     if (profileComplete === false) {
-                        navigation.navigate('CompleteProfile');
+                        navigation.navigate('Welcome');
                     } else {
-                        navigation.navigate('VenSync', { user: response.data.user });
+                        setTimeout(()=>{
+                            navigation.navigate('VenSync', { user: response.data});
+                        }, 1200)
+                        console.log(response.data)
                     }                    
                 } catch (error) {
                     console.error('Error saving data to AsyncStorage:', error.message);
                 }
-
-
-                // if (profileCompleted === "false") {
-                //     navigation.navigate('Welcome');
-                // } else {
-                //     navigation.navigate('VenSync', { user: response.data.user });
-                // }
-
             } else {
                 console.error('OTP verification failed:', response.data.message);
                 setErrorMessage(response.data.message || 'Invalid OTP. Please try again.');

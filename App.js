@@ -14,11 +14,12 @@ import {
   Vendor,
   Contact,
   Issue,
-  SubmitComplain,
+  Complain,
   MyIssue,
   Welcome,
   Developer,
   CompleteProfile,
+  ApplyVendor,
 } from './Screen/Component/exportAsset';
 import EmailAuth from './Screen/Auth/Email_Auth';
 
@@ -48,15 +49,16 @@ export default function App() {
           <Stack.Screen name="Welcome" component={Welcome} />
           <Stack.Screen name="SignUp" component={SignUp} />
           <Stack.Screen name="NavBar" component={NavBar} />
-          <Stack.Screen name="VenSync" component={VenSync} />
+          <Stack.Screen name="VenSync" component={VenSync}/>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Issue" component={Issue} />
           <Stack.Screen name="MyIssue" component={MyIssue} />
-          <Stack.Screen name="SubmitComplain" component={SubmitComplain} />
+          <Stack.Screen name="SubmitComplain" component={Complain} />
           <Stack.Screen name="Vendor" component={Vendor} />
           <Stack.Screen name="Profile" component={Profile} />
           <Stack.Screen name="CompleteProfile" component={CompleteProfile} />
           <Stack.Screen name="Developer" component={Developer} />
+          <Stack.Screen name="ApplyVendor" component={ApplyVendor} />
         </Stack.Navigator>
       </NavigationContainer>
     </ThemeProvider>

@@ -6,6 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Modal from "react-native-modal";
 import Lottie from 'lottie-react-native';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -34,18 +36,76 @@ export default function Issue() {
 
 
     const openCamera = async () => {
-        const camera = await launchCamera(options)
-    }
+        try {
+            const camera = await launchCamera(options);
+            if (camera.assets && camera.assets.length > 0) {
+                setImage(camera.assets[0].uri);
+            }
+            setOpenMedia(false); // Close the modal after selection
+        } catch (error) {
+            console.error('Error launching camera:', error);
+        }
+    };
 
     const openMedia = async () => {
-        const media = await launchImageLibrary(options)
+        try {
+            const media = await launchImageLibrary(options);
+            if (media.assets && media.assets.length > 0) {
+                setImage(media.assets[0].uri);
+            }
+            setOpenMedia(false); // Close the modal after selection
+        } catch (error) {
+            console.error('Error launching gallery:', error);
+        }
+    };
 
-    }
 
 
     const openMediaSheet = () => {
         setOpenMedia(!isopenMedia);
     }
+
+
+    const SubmitComplain = async () => {
+
+        const complain = {
+            title: complaintTitle,
+            description: description,
+            images: image,
+        }
+        try {
+            const token = await AsyncStorage.getItem('token');
+            if (!token) {
+                console.log('No token found');
+                return;
+            }
+
+            console.log('Retrieved Token:', token);
+            console.log('Complaint Data:', complain);
+
+            const response = await axios.post(
+                'https://vensync-se39.onrender.com/api/user/createcomplaint',
+                complain,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            console.log('Response Data:', response.data);
+        } catch (error) {
+            if (error.response) {
+                console.log('Error Response:', error.response.data);
+                console.log('Status Code:', error.response.status);
+            } else if (error.request) {
+                console.log('Error Request:', error.request);
+            } else {
+                console.log('Error Message:', error.message);
+            }
+        }
+    };
+
 
     return (
         <View style={{ backgroundColor: theme.bgColor, flex: 1, flexDirection: 'column', paddingHorizontal: 25, }}>
@@ -56,8 +116,8 @@ export default function Issue() {
 
             {/* Text ============================================= */}
             <View style={{ paddingVertical: ScreenH * 0.025, paddingHorizontal: 5 }}>
-                <Text style={{ fontSize: ScreenW*0.065, fontWeight: '600', color: theme.primaryText }}>Raise your Issue</Text>
-                <Text style={{ fontSize: ScreenW*0.035, color: theme.primaryText }}>View promotions that are displayed in membership marketplace.</Text>
+                <Text style={{ fontSize: ScreenW * 0.065, fontWeight: '600', color: theme.primaryText }}>Raise your Issue</Text>
+                <Text style={{ fontSize: ScreenW * 0.035, color: theme.primaryText }}>View promotions that are displayed in membership marketplace.</Text>
             </View>
 
 
@@ -84,7 +144,7 @@ export default function Issue() {
                             letterSpacing: 1,
                         }}
                         value={complaintTitle}
-                        onChange={setComplaintTitle}
+                        onChangeText={setComplaintTitle}
                         placeholder="Title"
                         keyboardType="default"
                         placeholderTextColor='#3d305e'
@@ -114,7 +174,7 @@ export default function Issue() {
                             flexWrap: 1,
                         }}
                         value={description}
-                        onChange={setDescription}
+                        onChangeText={setDescription}
                         placeholder="Description"
                         keyboardType="default"
                         letterSpacing={1}
@@ -151,9 +211,13 @@ export default function Issue() {
                     </View>
                 </TouchableWithoutFeedback>
 
-                <Modal isVisible={isopenMedia} onTouchEndCapture={() => {
-                    setOpenMedia(false);
-                }}>
+                <Modal
+                    isVisible={isopenMedia}
+                    onTouchEndCapture={() => {
+                        setOpenMedia(false);
+                    }}
+                >
+
                     <View style={{ position: 'absolute', backgroundColor: theme.pColor, width: '100%', left: 0, right: 0, height: ScreenH * 0.15, bottom: 0, borderTopLeftRadius: 20, borderTopRightRadius: 20, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, justifyContent: 'space-evenly' }}>
 
                         {/* Camera================================================ */}
@@ -191,7 +255,7 @@ export default function Issue() {
                         alignItems: 'center',
                         borderRadius: 18,
                     }}
-                    onPress={() => navigation.navigate('SubmitComplain')}
+                    onPress={SubmitComplain}
 
                 >
                     <Text style={{ textAlign: 'center', color: 'white', fontWeight: '600' }}>Raise Complaint</Text>
@@ -202,7 +266,7 @@ export default function Issue() {
     )
 }
 
-const SubmitComplain = ({ navigation }) => {
+const Complain = ({ navigation }) => {
     const theme = useTheme();
     const ComplainReference = "FRI893686";
 
@@ -218,28 +282,14 @@ const SubmitComplain = ({ navigation }) => {
 
 
     return (
-        // <View style={{ backgroundColor:theme.bgColor, flex: 1, justifyContent: 'center', alignItems: 'center', }}>
-        //     {/* Text ============================================= */}
-        //     <View style={{ paddingVertical: ScreenH * 0.035, paddingHorizontal: 5, justifyContent: 'center', alignItems:'center' }}>
-        //         <Lottie
-        //             source={require('../../Assets/Done.json')}
-        //             autoPlay
-        //             loop={true}
-        //             style={{width: '80%',  
-        //                 height: '80%', }}
-        //         />
-        //         <Text style={{ fontSize: 18, fontWeight: '600', color: theme.primaryText, }}>Track Your Complain</Text>
-        //         <Text style={{ fontSize: 14, color: theme.primaryText }}>Reference No. {ComplainReference}</Text>
-        //     </View>
-        // </View>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor:theme.bgColor}}>
-            <View style={{justifyContent:'center', alignItems:'center', flex:1}}>
-                <Lottie source={require('../../Assets/Done.json')} style={{ width: '100%', height: '14%', position:'absolute' }}
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: theme.bgColor }}>
+            <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                <Lottie source={require('../../Assets/Done.json')} style={{ width: '100%', height: '14%', position: 'absolute' }}
                     autoPlay
                     loop={true}
                 />
             </View>
-            <View style={{height:ScreenH*0.09, alignItems:'center'}}>
+            <View style={{ height: ScreenH * 0.09, alignItems: 'center' }}>
                 <Text style={{ fontSize: 18, fontWeight: '600', color: theme.primaryText, }}>Track Your Complain</Text>
                 <Text style={{ fontSize: 14, color: theme.primaryText, }}>Reference No. {ComplainReference}</Text>
             </View>
@@ -249,4 +299,4 @@ const SubmitComplain = ({ navigation }) => {
     )
 }
 
-export { SubmitComplain };
+export { Complain };

@@ -9,12 +9,13 @@ import SignIn from '../Auth/Signin.js'
 import SignUp from '../Auth/Signup.js'
 import Vendor from '../Vendor/Vendor.js'
 import Contact from '../Contact/Contact.js';
-import Issue, {SubmitComplain} from '../Home/Issue.js';
+import Issue, {Complain} from '../Home/Issue.js';
 import MyIssue from '../Home/My_issue.js';
 import EmailAuth from '../Auth/Email_Auth.js';
 import Welcome from '../Auth/Welcome.js'
 import Developer from '../Profile/Developer.js';
 import CompleteProfile from '../Profile/completeProfile.js'
+import ApplyVendor from '../Vendor/applyVendor.js'
 
 // Icon Import
 import HomeIcon from '../../Assets/Icon/home.svg'; 
@@ -63,13 +64,14 @@ export{
     Vendor,
     Contact,
     Issue,
-    SubmitComplain,
+    Complain,
     MyIssue,
 
     EmailAuth,
     Welcome,
     Developer,
     CompleteProfile,
+    ApplyVendor,
 
     // Icon Export
     HomeIcon,

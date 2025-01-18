@@ -11,8 +11,9 @@ const Profile = ({ navigation }) => {
     // const navigation = useNavigation();
 
     const deleteToken = async () => {
-        await AsyncStorage.removeItem("token");
-        const timer = setTimeout(() => {
+        // await AsyncStorage.removeItem("token");
+        await AsyncStorage.clear()
+        setTimeout(() => {
             navigation.navigate('EmailAuth');
         }, 1200);
     }
@@ -64,23 +65,25 @@ const Profile = ({ navigation }) => {
     console.log(calculateRegistrationDuration("2024-01-01", "2025-06-01")); // Output: 1 year 5 months
 
 
-    const Dev = ()=>{
+    const Dev = () => {
         navigation.navigate('Developer')
     }
 
     return (
-        <View style={{ flexDirection: 'column', width: ScreenW, height: ScreenH, zIndex: 1, position: 'relative', backgroundColor: theme.onBoard, flex: 1, paddingVertical: ScreenH * 0.05, paddingHorizontal: ScreenW * 0.055 }}>
+        <View style={{ flexDirection: 'column', width: ScreenW, height: ScreenH, zIndex: 1, position: 'relative', backgroundColor: theme.onBoard, flex: 1, paddingVertical: ScreenH * 0.04, paddingHorizontal: ScreenW * 0.055 }}>
             <StatusBar barStyle={theme.statusBarContent} backgroundColor="transparent" translucent={true} />
 
             <View style={{ width: ScreenW * 0.87, flexDirection: 'column' }}>
                 {/* AppBar============================================================= */}
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={{ fontSize: ScreenW * 0.038, color: theme.primaryText, paddingHorizontal: 5 }}>Profile</Text>
-                    <Text style={{ fontSize: ScreenW * 0.038, color: theme.primaryText, }} onPress={deleteToken}>Edit Profile</Text>
+                    <View style={{ paddingHorizontal: 10, backgroundColor: theme.SkipColor, paddingVertical: 8, borderRadius: 20 }}>
+                        <Text style={{ fontSize: ScreenW * 0.03, color: theme.primaryText, }} onPress={deleteToken}>Log Out</Text>
+                    </View>
                 </View>
 
                 {/* Profile, Name, Email */}
-                <View style={{ flexDirection: 'row', paddingVertical: ScreenH * 0.05, alignItems: 'center', gap: 20 }}>
+                <View style={{ flexDirection: 'row', paddingVertical: ScreenH * 0.045, alignItems: 'center', gap: 20 }}>
                     <View style={{ width: 65, height: 65, borderRadius: 65 / 2, overflow: 'hidden' }}>
                         <Image source={require('../../Assets/user/Boy.jpg')} style={{ flex: 1, width: undefined, height: undefined }}></Image>
                     </View>
@@ -201,7 +204,7 @@ const Profile = ({ navigation }) => {
 
                 {/* Time */}
                 <View style={{}}>
-                    <Text style={{ fontSize: ScreenW * 0.032, color: theme.primaryText, alignSelf:'center', textAlign:'center'}}>You joined Brees on September 2021. It’s been 1 month since then and our mission is still the same, help you better manage your finance like a brees.</Text>
+                    <Text style={{ fontSize: ScreenW * 0.032, color: theme.primaryText, alignSelf: 'center', textAlign: 'center' }}>You joined Brees on September 2021. It’s been 1 month since then and our mission is still the same, help you better manage your finance like a brees.</Text>
                 </View>
             </View>
         </View>

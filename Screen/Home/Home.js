@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useTheme } from '../Component/theme';
 import { useNavigation } from '@react-navigation/native';
-import { StatusBar, View, Text, Image, ImageBackground, TouchableWithoutFeedback } from 'react-native';
-import { BackIcon, ScreenH, ScreenW, BarcodeScan, DashboardIcon, IssueIcon, NotificationIcon, Issue} from "../Component/exportAsset";
+import { StatusBar, View, Text, Image, ImageBackground, TouchableWithoutFeedback, ToastAndroid, BackHandler } from 'react-native';
+import { BackIcon, ScreenH, ScreenW, BarcodeScan, DashboardIcon, IssueIcon, NotificationIcon, Issue } from "../Component/exportAsset";
 
 const Home = () => {
     const theme = useTheme();
@@ -18,7 +18,6 @@ const Home = () => {
     const Dashboard = () => {
         navigation.navigate()
     };
-
 
     return (
         <View style={{ flexDirection: 'column', width: ScreenW, height: ScreenH, zIndex: 1, position: 'relative', backgroundColor: theme.onBoard, flex: 1 }}>
@@ -89,7 +88,7 @@ const Home = () => {
                 {/* Complain */}
                 <View style={{ flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', width: ScreenW, alignSelf: 'center', }}>
                     {/* Create Issue */}
-                    <TouchableWithoutFeedback onPress={IssueHandle}>
+                    <TouchableWithoutFeedback onPress={() => navigation.navigate('Issue')}>
                         <View style={{ flexDirection: 'column', alignItems: 'center', gap: ScreenH * 0.008 }}>
                             <View style={{ backgroundColor: '#D7EDFF', width: ScreenW * 0.15, height: ScreenH * 0.068, borderRadius: 15, justifyContent: 'center', alignItems: 'center' }}>
                                 <BarcodeScan width={ScreenW * 0.075} height={35} />
@@ -99,7 +98,7 @@ const Home = () => {
                     </TouchableWithoutFeedback>
 
                     {/* My Issue */}
-                    <TouchableWithoutFeedback onPress={myIssue}>
+                    <TouchableWithoutFeedback onPress={() => navigation.navigate('MyIssue')}>
                         <View style={{ flexDirection: 'column', alignItems: 'center', gap: ScreenH * 0.008 }}>
                             <View style={{ backgroundColor: '#E2FFF7', width: ScreenW * 0.15, height: ScreenH * 0.068, borderRadius: 15, justifyContent: 'center', alignItems: 'center' }}>
                                 <IssueIcon width={ScreenW * 0.075} height={35} />
