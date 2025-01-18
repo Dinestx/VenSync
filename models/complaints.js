@@ -2,11 +2,7 @@
 import mongoose from "mongoose";
 import crypto from "crypto";
 const complaintSchema = new mongoose.Schema({
-  complaint_id: {
-    type: String,
-    unique: true,
-    required: true,
-  },
+  
   title: {
     type: String,
     required: true,
@@ -30,6 +26,11 @@ const complaintSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
+  complaint_id: {
+    type: String,
+    unique: true,
+    required: true,
+  },
   assigned_to: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Vendor',
@@ -43,9 +44,10 @@ const complaintSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
+
 complaintSchema.pre("save", async function (next) {
   if (!this.complaint_id) {
-    // Generate a unique 9-character alphanumeric ID
+  
     this.complaint_id = crypto.randomBytes(5).toString("hex").slice(0, 9).toUpperCase();
   }
   next();
