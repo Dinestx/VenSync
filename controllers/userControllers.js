@@ -28,6 +28,7 @@ export const completeprofile = async(req,res)=>{
       res.status(201).json({
         message: 'Profile completed successfully',
         profileComplete: true,
+        user:{user},
       });
     } catch (err) {
       res.status(500).json({ message: 'Error completing profile', error: err.message });
@@ -76,18 +77,20 @@ export const createComplaint = async (req, res) => {
   
     try {
       // Find user associated with the baseId
-      const user = await User.findOne({ baseId }).populate("complaints");
-      // const vendor = await Vendor.findOne({ baseId });
-  
-      // If the user exists, return their complaints
+      const user = await User.findOne({ baseId });
+
       if (user) {
+        // Fetch complaints created by the user, with populated user and vendor details
+        const complaints = await Complaint.find({ created_by: user._id })
+          .populate("created_by", "name email phone address") // Populate user details
+          .populate("assigned_to", "name phone address"); // Populate vendor details
+  
         return res.status(200).json({
           message: "Complaints fetched successfully",
           role: "user",
-          complaints: user.complaints,
+          complaints,
         });
       }
-  
       // If the vendor exists, fetch complaints assigned to them
       // if (vendor) {
       //   const vendorComplaints = await Complaint.find({ assigned_to: vendor._id });
