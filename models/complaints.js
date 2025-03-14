@@ -2,7 +2,7 @@
 import mongoose from "mongoose";
 import crypto from "crypto";
 const complaintSchema = new mongoose.Schema({
-  
+
   title: {
     type: String,
     required: true,
@@ -11,11 +11,9 @@ const complaintSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  images: [
-    {
-      type: String, // URLs or file paths for uploaded images
-    },
-  ],
+  images:{
+      type: String,
+  },
   status: {
     type: String,
     enum: ['pending', 'progress', 'completed','rejected'],
@@ -47,7 +45,7 @@ const complaintSchema = new mongoose.Schema({
 
 complaintSchema.pre("validate", function (next) {
   if (!this.complaint_id) {
-  
+
     this.complaint_id = crypto.randomBytes(5).toString("hex").slice(0, 9).toUpperCase();
   }
   next();
